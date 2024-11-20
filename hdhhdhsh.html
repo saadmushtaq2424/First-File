@@ -1,0 +1,79 @@
+
+<script>
+    // Select color pickers, reset buttons, and counter displays for each quadrant
+const colorPickerTopLeft = document.getElementById("colorPickerTopLeft");
+const colorPickerTopRight = document.getElementById("colorPickerTopRight");
+const colorPickerBottomLeft = document.getElementById("colorPickerBottomLeft");
+const colorPickerBottomRight = document.getElementById("colorPickerBottomRight");
+
+const topLeft = document.getElementById("topLeft");
+const topRight = document.getElementById("topRight");
+const bottomLeft = document.getElementById("bottomLeft");
+const bottomRight = document.getElementById("bottomRight");
+
+const resetTopLeft = document.getElementById("resetTopLeft");
+const resetTopRight = document.getElementById("resetTopRight");
+const resetBottomLeft = document.getElementById("resetBottomLeft");
+const resetBottomRight = document.getElementById("resetBottomRight");
+
+const counterTopLeft = document.getElementById("counterTopLeft");
+const counterTopRight = document.getElementById("counterTopRight");
+const counterBottomLeft = document.getElementById("counterBottomLeft");
+const counterBottomRight = document.getElementById("counterBottomRight");
+
+let topLeftCount = 0;
+let topRightCount = 0;
+let bottomLeftCount = 0;
+let bottomRightCount = 0;
+
+// Add 'click' event to each color picker
+colorPickerTopLeft.addEventListener("click", () => {
+    topLeftCount++;
+    counterTopLeft.textContent = `Changes: ${topLeftCount}`;
+});
+
+colorPickerTopRight.addEventListener("click", () => {
+    topRightCount++;
+    counterTopRight.textContent = `Changes: ${topRightCount}`;
+});
+
+colorPickerBottomLeft.addEventListener("click", () => {
+    bottomLeftCount++;
+    counterBottomLeft.textContent = `Changes: ${bottomLeftCount}`;
+});
+
+colorPickerBottomRight.addEventListener("click", () => {
+    bottomRightCount++;
+    counterBottomRight.textContent = `Changes: ${bottomRightCount}`;
+});
+
+// Reset to default white for each quadrant and reset the counter
+resetTopLeft.addEventListener("click", () => {
+    topLeft.style.backgroundColor = "#ffffff";
+    colorPickerTopLeft.value = "#ffffff";
+    topLeftCount = 0;
+    counterTopLeft.textContent = `Changes: ${topLeftCount}`;
+});
+
+resetTopRight.addEventListener("click", () => {
+    topRight.style.backgroundColor = "#ffffff";
+    colorPickerTopRight.value = "#ffffff";
+    topRightCount = 0;
+    counterTopRight.textContent = `Changes: ${topRightCount}`;
+});
+
+resetBottomLeft.addEventListener("click", () => {
+    bottomLeft.style.backgroundColor = "#ffffff";
+    colorPickerBottomLeft.value = "#ffffff";
+    bottomLeftCount = 0;
+    counterBottomLeft.textContent = `Changes: ${bottomLeftCount}`;
+});
+
+resetBottomRight.addEventListener("click", () => {
+    bottomRight.style.backgroundColor = "#ffffff";
+    colorPickerBottomRight.value = "#ffffff";
+    bottomRightCount = 0;
+    counterBottomRight.textContent = `Changes: ${bottomRightCount}`;
+});
+
+</script>

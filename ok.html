@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Picker with Counter</title>
+    <style>
+        body {
+            margin: 0;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            height: 100vh;
+        }
+
+        .quadrant {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            margin-top: 10px;
+            padding: 8px 16px;
+            cursor: pointer;
+        }
+
+        .counter {
+            margin-top: 5px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="quadrant" id="topLeft">
+        <h2>Top Left</h2>
+        <input type="color" id="colorPickerTopLeft" value="#ffffff">
+        <button id="resetTopLeft">Reset to Default</button>
+        <div class="counter" id="counterTopLeft">Changes: 0</div>
+    </div>
+    <div class="quadrant" id="topRight">
+        <h2>Top Right</h2>
+        <input type="color" id="colorPickerTopRight" value="#ffffff">
+        <button id="resetTopRight">Reset to Default</button>
+        <div class="counter" id="counterTopRight">Changes: 0</div>
+    </div>
+    <div class="quadrant" id="bottomLeft">
+        <h2>Bottom Left</h2>
+        <input type="color" id="colorPickerBottomLeft" value="#ffffff">
+        <button id="resetBottomLeft">Reset to Default</button>
+        <div class="counter" id="counterBottomLeft">Changes: 0</div>
+    </div>
+    <div class="quadrant" id="bottomRight">
+        <h2>Bottom Right</h2>
+        <input type="color" id="colorPickerBottomRight" value="#ffffff">
+        <button id="resetBottomRight">Reset to Default</button>
+        <div class="counter" id="counterBottomRight">Changes: 0</div>
+    </div>
+    <script src="script.js"></script>
+    
+<script>
+// Select color pickers, reset buttons, and counter displays for each quadrant
+const colorPickerTopLeft = document.getElementById("colorPickerTopLeft");
+const colorPickerTopRight = document.getElementById("colorPickerTopRight");
+const colorPickerBottomLeft = document.getElementById("colorPickerBottomLeft");
+const colorPickerBottomRight = document.getElementById("colorPickerBottomRight");
+
+const topLeft = document.getElementById("topLeft");
+const topRight = document.getElementById("topRight");
+const bottomLeft = document.getElementById("bottomLeft");
+const bottomRight = document.getElementById("bottomRight");
+
+const resetTopLeft = document.getElementById("resetTopLeft");
+const resetTopRight = document.getElementById("resetTopRight");
+const resetBottomLeft = document.getElementById("resetBottomLeft");
+const resetBottomRight = document.getElementById("resetBottomRight");
+
+const counterTopLeft = document.getElementById("counterTopLeft");
+const counterTopRight = document.getElementById("counterTopRight");
+const counterBottomLeft = document.getElementById("counterBottomLeft");
+const counterBottomRight = document.getElementById("counterBottomRight");
+
+const resetCounterTopLeft = document.getElementById("resetCounterTopLeft");
+const resetCounterTopRight = document.getElementById("resetCounterTopRight");
+const resetCounterBottomLeft = document.getElementById("resetCounterBottomLeft");
+const resetCounterBottomRight = document.getElementById("resetCounterBottomRight");
+
+let topLeftCount = 0;
+let topRightCount = 0;
+let bottomLeftCount = 0;
+let bottomRightCount = 0;
+
+let topLeftLocked = false;
+let topRightLocked = false;
+let bottomLeftLocked = false;
+let bottomRightLocked = false;
+
+let totalTopLeftChanges = 0;
+let totalTopRightChanges = 0;
+let totalBottomLeftChanges = 0;
+let totalBottomRightChanges = 0;
+
+let totalTopLeftResets = 0;
+let totalTopRightResets = 0;
+let totalBottomLeftResets = 0;
+let totalBottomRightResets = 0;
+
+// Color change logic for each quadrant
+colorPickerTopLeft.addEventListener("input", () => {
+    if (!topLeftLocked) {
+        topLeft.style.backgroundColor = colorPickerTopLeft.value;
+        topLeftCount++;
+        counterTopLeft.textContent = `Color Changes: ${topLeftCount}`;
+        if (topLeftCount === 10) {
+            alert("Maximum 10 color changes reached for Top Left quadrant! It is now locked.");
+            topLeftLocked = true;
+            colorPickerTopLeft.disabled = true;
+        }
+    }
+});
+
+colorPickerTopRight.addEventListener("input", () => {
+    if (!topRightLocked) {
+        topRight.style.backgroundColor = colorPickerTopRight.value;
+        topRightCount++;
+        counterTopRight.textContent = `Color Changes: ${topRightCount}`;
+        if (topRightCount === 10) {
+            alert("Maximum 10 color changes reached for Top Right quadrant! It is now locked.");
+            topRightLocked = true;
+            colorPickerTopRight.disabled = true;
+        }
+    }
+});
+
+colorPickerBottomLeft.addEventListener("input", () => {
+    if (!bottomLeftLocked) {
+        bottomLeft.style.backgroundColor = colorPickerBottomLeft.value;
+        bottomLeftCount++;
+        counterBottomLeft.textContent = `Color Changes: ${bottomLeftCount}`;
+        if (bottomLeftCount === 10) {
+            alert("Maximum 10 color changes reached for Bottom Left quadrant! It is now locked.");
+            bottomLeftLocked = true;
+            colorPickerBottomLeft.disabled = true;
+        }
+    }
+});
+
+colorPickerBottomRight.addEventListener("input", () => {
+    if (!bottomRightLocked) {
+        bottomRight.style.backgroundColor = colorPickerBottomRight.value;
+        bottomRightCount++;
+        counterBottomRight.textContent = `Color Changes: ${bottomRightCount}`;
+        if (bottomRightCount === 10) {
+            alert("Maximum 10 color changes reached for Bottom Right quadrant! It is now locked.");
+            bottomRightLocked = true;
+            colorPickerBottomRight.disabled = true;
+        }
+    }
+});
+
+// Reset button functionality (tracking color reset separately)
+resetTopLeft.addEventListener("click", () => {
+    if (topLeftLocked) {
+        alert(`Top Left quadrant is locked. Total color changes: ${topLeftCount}`);
+    } else {
+        topLeft.style.backgroundColor = "#ffffff";
+        colorPickerTopLeft.value = "#ffffff";
+        topLeftCount = 0;
+        counterTopLeft.textContent = `Color Changes: ${topLeftCount}`;
+    }
+    totalTopLeftResets++;
+    resetCounterTopLeft.textContent = `Reset Changes: ${totalTopLeftResets}`;
+    alert(`Top Left quadrant reset ${totalTopLeftResets} times.`);
+});
+
+resetTopRight.addEventListener("click", () => {
+    if (topRightLocked) {
+        alert(`Top Right quadrant is locked. Total color changes: ${topRightCount}`);
+    } else {
+        topRight.style.backgroundColor = "#ffffff";
+        colorPickerTopRight.value = "#ffffff";
+        topRightCount = 0;
+        counterTopRight.textContent = `Color Changes: ${topRightCount}`;
+    }
+    totalTopRightResets++;
+    resetCounterTopRight.textContent = `Reset Changes: ${totalTopRightResets}`;
+    alert(`Top Right quadrant reset ${totalTopRightResets} times.`);
+});
+
+resetBottomLeft.addEventListener("click", () => {
+    if (bottomLeftLocked) {
+        alert(`Bottom Left quadrant is locked. Total color changes: ${bottomLeftCount}`);
+    } else {
+        bottomLeft.style.backgroundColor = "#ffffff";
+        colorPickerBottomLeft.value = "#ffffff";
+        bottomLeftCount = 0;
+        counterBottomLeft.textContent = `Color Changes: ${bottomLeftCount}`;
+    }
+    totalBottomLeftResets++;
+    resetCounterBottomLeft.textContent = `Reset Changes: ${totalBottomLeftResets}`;
+    alert(`Bottom Left quadrant reset ${totalBottomLeftResets} times.`);
+});
+
+resetBottomRight.addEventListener("click", () => {
+    if (bottomRightLocked) {
+        alert(`Bottom Right quadrant is locked. Total color changes: ${bottomRightCount}`);
+    } else {
+        bottomRight.style.backgroundColor = "#ffffff";
+        colorPickerBottomRight.value = "#ffffff";
+        bottomRightCount = 0;
+        counterBottomRight.textContent = `Color Changes: ${bottomRightCount}`;
+    }
+    totalBottomRightResets++;
+    resetCounterBottomRight.textContent = `Reset Changes: ${totalBottomRightResets}`;
+    alert(`Bottom Right quadrant reset ${totalBottomRightResets} times.`);
+});
+
+</script>
+</body>
+
+</html>
